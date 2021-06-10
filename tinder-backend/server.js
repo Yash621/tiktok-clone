@@ -1,26 +1,46 @@
 import express from "express";
 import mongoose from "mongoose";
-import data from "./data.js";
+import Data from "./data.js";
+import videos from "./dbModel.js";
 /* ------------------------------- APP CONFIG ------------------------------- */
 const app = express();
-const port = 9000;
+const port = process.env.PORT || 9000;
 const connection_url =
   "mongodb+srv://yash:yash@cluster0.glxur.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
+/* ------------------------------- MIDDLEWARES ------------------------------ */
+app.use(express.json());
+
+/* -------------------------------- DB CONFIG ------------------------------- */
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
-/* ------------------------------- MIDDLEWARES ------------------------------ */
-
-/* -------------------------------- DB CONFIG ------------------------------- */
-
 /* ------------------------------ API ENDPOINTS ----------------------------- */
 app.get("/", (req, res) => res.status(200).send("hello world"));
 
-app.get("/v1/posts", (req, res) => {
-  res.status(200).send(data);
+app.get("/v1/posts", (req, res) => res.status(200).send(Data));
+
+app.get("/v2/posts", (req, res) => {
+  videos.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.post("/v2/posts", (req, res) => {
+  const dbVideos = Data;
+  videos.create(dbVideos, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(Data);
+    }
+  });
 });
 /* ------------------------------ APP LISTENER ------------------------------ */
 app.listen(port, () => console.log(`listening on localhost:${port}`));
