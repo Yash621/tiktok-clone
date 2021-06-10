@@ -5,27 +5,33 @@ import ShareIcon from "@material-ui/icons/Share";
 import React, { useState } from "react";
 import "./VideoSideBar.css";
 
-function VideoSideBar() {
+function VideoSideBar({ likes, shares, comments }) {
   const [liked, setLiked] = useState(false);
 
   return (
     <div className="videoSideBar">
       <div className="videoSideBar_button">
         {liked ? (
-          <FavoriteIcon fontSize="large" onClick={() => setLiked(false)} />
+          <div>
+            <FavoriteIcon fontSize="large" onClick={() => setLiked(false)} />
+          </div>
         ) : (
-          <FavoriteBorderIcon fontSize="large" onClick={() => setLiked(true)} />
+          <div>
+            <FavoriteBorderIcon
+              fontSize="large"
+              onClick={() => setLiked(true)}
+            />
+          </div>
         )}
-
-        <p>100</p>
+        <p>{liked ? likes + 1 : likes}</p>
       </div>
       <div className="videoSideBar_button">
         <MessageIcon fontSize="large" />
-        <p>250</p>
+        <p>{comments}</p>
       </div>
       <div className="videoSideBar_button">
         <ShareIcon fontSize="large" />
-        <p>12</p>
+        <p>{shares}</p>
       </div>
     </div>
   );

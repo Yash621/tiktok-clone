@@ -5,8 +5,20 @@ function App() {
   return (
     <div className="App">
       <div className="app_videos">
-        <Video />
-        <Video />
+        <Video url={}
+          description={ }
+          username={ }
+          song={ }
+          likes={ }
+          comments={ }
+          shares={ }/>
+        <Video url={}
+          description={ }
+          username={ }
+          song={ }
+          likes={ }
+          comments={ }
+          shares={ }/>
       </div>
     </div>
   );
